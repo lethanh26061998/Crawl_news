@@ -20,7 +20,7 @@ Sử dụng Selenium+Chrome Driver để thu thập dữ liệu:
 - Kiểm tra version của Google chrome đang sử dụng: 85.0.4183.87
 - Download driver Google chrome tương ứng: 
     https://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/ 
-- Giải nén và lưu folder chromedriver_linux64 trong folder Crawl_news
+- Giải nén và lưu folder chromedriver_linux64 trong folder Crawl
 
 2.3 Web
 
