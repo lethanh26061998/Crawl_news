@@ -9,6 +9,7 @@
 	pip install -r requirment.txt
 	
 2. Cài đặt code
+
 2.1 Cấu trúc source code
 - Crawl_news:
     + listweb.py: chưa biến là 1 dict, lưu trữ phân tích trang của các websites.
