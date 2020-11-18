@@ -1,6 +1,7 @@
 import re
 import time
 import schedule
+import csv
 
 try:
 	import urlparse
@@ -22,9 +23,22 @@ driver = webdriver.Chrome(
 options.add_argument('--headless')
 
 keys = [
-	# "tình hình covid",
-	# "ncov",
-	"bách khoa 2020"
+	"toàn dân đoàn kết hậu covid",
+    "doanh nghiệp có thể phá sản nếu covid kéo dài",
+    "lợi ích dịch covid mang lại",
+    "người dân chủ quan trong phòng chống dịch"
+    "corona làm suy thoái kinh tế ",
+    "vắc xin cho corona",
+    "khẩu trang mùa covid",
+    "khu cách ly mùa dịch covid",
+    "các ca hồi phục khỏi covid tại việt nam",
+    "nghĩa cử cao đẹp mùa dich",
+    "dịch covid và bầu cử tại Mỹ",
+    "tin tức covid 19",
+    "tin giả covid",
+    "tình hình covid tại Mỹ",
+    "tình hình covid tại các nước châu Âu",
+    "triệu trứng corona"
 ]
 print("===START========")
 # txt_site = 'or'.join(list_web)
@@ -92,7 +106,7 @@ def get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outl
 		outlink = list(set(outlink))
 	else:
 		outlink = []
-	return title, content, time_article, date_article, public_date, tag, outlink
+	return title, content, time_article, date_article, public_date
 
 start_time = time.time()
 def main():
@@ -110,7 +124,7 @@ def main():
 				current_link = driver.current_url
 				##
 				if xpath_isloadmore != '':
-					print(url, " === isloadmore")
+					# print(url, " === isloadmore")
 					try:
 						i = 1
 						driver.get(current_link)
@@ -120,7 +134,7 @@ def main():
 							load_more.click()
 							time.sleep(5)
 							load_more = driver.find_element_by_xpath(xpath_isloadmore)
-							print("load_more", i)
+							# print("load_more", i)
 							time.sleep(2)
 					except:
 						pass	
@@ -131,40 +145,30 @@ def main():
 						time.sleep(5)
 						arr_links = []
 						arr_links = get_link(xpath_links)
-						print("arr links load_more: ", arr_links)
+						# print("arr links load_more: ", arr_links)
 						for link in arr_links:
-							# print("===", link)
 							info_link = get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outlink)
-							time.sleep(5)
-							# ghi du lieu vao file csv hay database???
-								###
-								###
-							print("Da lay info of link: ", link) 
+							time.sleep(2)
+							writer.writerow(info_link)
+							# print("Da lay info of link: ", link, "is: ", info_link) 
 					except:
 						pass
 					##
 				if xpath_next != '':
-					print(url, " === nextpage")
 					arr_links_page = get_link(xpath_links)
-					print("arr links 1: ", arr_links_page)
 					for link in arr_links_page:
-						# print("1===", link)
 						try:
 							info_link = get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outlink)
-							# print("Da lay info: ", link)
 							# print("Info link: ", info_link)
 						except:
 							pass
 						time.sleep(3)
-						# ghi du lieu vao file csv hay database???
-							###
-							###
 					print("Done first page of keyword: ", key, "from website: ", url) 
 					try:
 						i = 1
 						driver.get(current_link)
 						next_page = driver.find_element_by_xpath(xpath_next)
-						print("done page 1")
+						print("Done first page!")
 						while next_page:
 							i = i + 1
 							next_page.click()
@@ -174,15 +178,12 @@ def main():
 							driver.get(current_link)
 							arr_links_page_next = []
 							arr_links_page_next = get_link(xpath_links)
-							print("arr links: ", arr_links_page_next)
 							for link in arr_links_page_next:
-								get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outlink)
-								print("Da lay info", link)
+								info_link = get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outlink)
 								time.sleep(2)
+								writer.writerow(info_link)
 							driver.get(current_link)
-							print("Done Page: ", i, "of keyword: ", key, "from website: ", url)
 							next_page = driver.find_element_by_xpath(xpath_next) 
-							print("===THANHLT54===: ", next_page)
 					except:
 						pass
 					print("Crawled data: ", key, "from website:", url)
@@ -190,7 +191,7 @@ def main():
 		print("=======Crawled all data!=======")
 	except:
 		pass
-	time_finish = time.time()
+finish_time = time.time()
 
 # schedule.every().hour.do(main)
 
@@ -199,8 +200,11 @@ def main():
 	# time.sleep(1)
 
 
-if __name__ == "__main__":
-	main()
+if __name__ == "__main__":	
 	# driver.close()
-	# driver.quit()
-	print("Total time crawling is: ", (time.time() - start_time))
+	# driver.quit()								
+	with open ('crawl_news_1.csv','w', newline='') as file:
+		writer = csv.writer(file)
+		writer.writerow(['title', 'content', 'time_article', 'date_article', 'public_date'])
+		main()
+	print("Total time crawling is: ", (finish_time - start_time))
