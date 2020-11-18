@@ -29,4 +29,4 @@ Sử dụng Selenium+Chrome Driver để thu thập dữ liệu:
 - B1: crawl data: (Thư mục DATN để ở home/)
 	+ Vào môi trường ảo đã được cài đặt, có tên là DATN: source DATN/bin/activate
 	+ Vào thư mục Crawl trong DATN: cd DATN/Crawl/
-	+ Chạy code crawl dữ liệu trên nhiều trang web: python3 crawl_news.py
+	+ Chạy code crawl tin tức theo key word trên nhiều trang báo uy tín: python3 crawl_news.py
