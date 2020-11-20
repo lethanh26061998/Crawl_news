@@ -23,6 +23,7 @@ driver = webdriver.Chrome(
 options.add_argument('--headless')
 
 keys = [
+<<<<<<< HEAD
 	# "tin hot",
 	# "n-cov",
 	# "covid-19",
@@ -48,6 +49,24 @@ keys = [
 	"xét nghiệm covid",
 	"lây lan",
 	"miễn dịch"
+=======
+	"toàn dân đoàn kết hậu covid",
+    "doanh nghiệp có thể phá sản nếu covid kéo dài",
+    "lợi ích dịch covid mang lại",
+    "người dân chủ quan trong phòng chống dịch"
+    "corona làm suy thoái kinh tế ",
+    "vắc xin cho corona",
+    "khẩu trang mùa covid",
+    "khu cách ly mùa dịch covid",
+    "các ca hồi phục khỏi covid tại việt nam",
+    "nghĩa cử cao đẹp mùa dich",
+    "dịch covid và bầu cử tại Mỹ",
+    "tin tức covid 19",
+    "tin giả covid",
+    "tình hình covid tại Mỹ",
+    "tình hình covid tại các nước châu Âu",
+    "triệu trứng corona"
+>>>>>>> c0c5acdd8507d0c42c9c10b127f9daf407b46b95
 ]
 print("===START========")
 # txt_site = 'or'.join(list_web)
@@ -142,7 +161,7 @@ def main():
 							load_more.click()
 							time.sleep(5)
 							load_more = driver.find_element_by_xpath(xpath_isloadmore)
-							print("load_more", i)
+							# print("load_more", i)
 							time.sleep(2)
 					except:
 						pass	
@@ -158,7 +177,11 @@ def main():
 							info_link = get_info(link, xpath_title, xpath_content, xpath_time, xpath_tag, xpath_outlink)
 							time.sleep(2)
 							writer.writerow(info_link)
+<<<<<<< HEAD
 						print("Done first page of keyword: ", key, "from website: ", url)
+=======
+							# print("Da lay info of link: ", link, "is: ", info_link) 
+>>>>>>> c0c5acdd8507d0c42c9c10b127f9daf407b46b95
 					except:
 						pass
 					##
@@ -199,7 +222,11 @@ def main():
 		print("=======Crawled all data!=======")
 	except:
 		pass
+<<<<<<< HEAD
 
+=======
+finish_time = time.time()
+>>>>>>> c0c5acdd8507d0c42c9c10b127f9daf407b46b95
 
 # schedule.every().hour.do(main)
 
@@ -210,6 +237,7 @@ def main():
 
 if __name__ == "__main__":	
 	# driver.close()
+<<<<<<< HEAD
 	# driver.quit()
 	
 	start_time = time.time()								
@@ -219,3 +247,11 @@ if __name__ == "__main__":
 		main()
 	finish_time = time.time()
 	print("Total run-time: %f s" % (finish_time - start_time))
+=======
+	# driver.quit()								
+	with open ('crawl_news_1.csv','w', newline='') as file:
+		writer = csv.writer(file)
+		writer.writerow(['title', 'content', 'time_article', 'date_article', 'public_date'])
+		main()
+	print("Total time crawling is: ", (finish_time - start_time))
+>>>>>>> c0c5acdd8507d0c42c9c10b127f9daf407b46b95
